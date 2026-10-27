@@ -1,0 +1,26 @@
+FARMER CROP SELLING MANAGEMENT SYSTEM — DEMO CHECKLIST
+
+Before demo:
+[ ] Start MySQL Server
+[ ] Run sql/01_setup_and_sample_data.sql on a fresh project database
+[ ] Run sql/02_queries_and_tests.sql
+[ ] Capture screenshots of tables and outputs
+[ ] Keep the report ready
+
+Live demo sequence:
+1. USE FarmerCropDB;
+2. SHOW TABLES;
+3. SELECT * FROM Farmers;
+4. SELECT * FROM Crops;
+5. SELECT * FROM OrderDetails;
+6. CALL ShowAvailableCrops();
+7. Show JOIN and subquery examples in 02_queries_and_tests.sql.
+8. Show payment balance query.
+9. Optional: test stock trigger once with the valid 10 kg onion order.
+10. Optional: test invalid stock order separately and show the error.
+
+Remember:
+- The setup script drops and recreates FarmerCropDB. It deletes existing data in that database.
+- The valid trigger test should only be run once after setup.
+- The invalid stock test is expected to fail; that is a successful test of validation.
+- Sample records are fictional.
