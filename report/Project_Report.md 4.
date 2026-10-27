@@ -1,0 +1,86 @@
+Farmer Crop Selling Management System
+DBMS Mini Project Report
+Technology: MySQL 8.0  
+Interface: MySQL Command-Line Client  
+Project type: Relational Database Management System (RDBMS) mini project
+1. Abstract
+The Farmer Crop Selling Management System is a database application designed to maintain farmer details, buyer details, crop listings, orders, and payments. It uses a relational schema to connect these records and supports SQL queries for retrieving and summarizing information. Primary keys and foreign keys preserve record relationships, constraints validate data, a view simplifies order reporting, a stored procedure lists available crops, and triggers validate and deduct inventory when a new order is inserted.
+2. Problem Statement
+Crop sales may be recorded manually across separate notebooks or spreadsheets. This can make it difficult to track crop quantities, current prices, buyers, orders, and outstanding payments consistently. This project organizes these records in a MySQL relational database and demonstrates how database constraints and SQL operations can improve data consistency and retrieval.
+3. Objectives
+Store and manage farmer and buyer information.
+Maintain crop listings, quantity available, price per kilogram, and harvest date.
+Record crop orders and their total value.
+Record payments and calculate outstanding balances.
+Prevent new orders that exceed available stock.
+Demonstrate core DBMS concepts through SQL statements.
+4. Scope
+The project is a local academic database demonstration. It uses fictional sample data and a command-line interface. It is not a deployed marketplace and does not process real payments.
+5. Software Requirements
+MySQL Server 8.0
+MySQL Command-Line Client
+Windows or Linux
+Text editor for SQL files
+6. Database Design
+The database is named `FarmerCropDB` and contains five tables.
+Table	Purpose	Primary key	Foreign keys
+Farmers	Farmer profile	farmer_id	—
+Buyers	Buyer profile	buyer_id	—
+Crops	Crop listings and stock	crop_id	farmer_id → Farmers
+Orders	Crop purchases	order_id	buyer_id → Buyers; crop_id → Crops
+Payments	Payments against orders	payment_id	order_id → Orders
+Relationships
+One farmer can have multiple crop listings (one-to-many).
+One buyer can place multiple orders (one-to-many).
+One crop listing can be referenced by multiple orders over time (one-to-many).
+One order can have multiple payments (one-to-many).
+7. Important DBMS Concepts
+DDL: `CREATE DATABASE`, `CREATE TABLE`, `CREATE VIEW`.
+DML: `INSERT`, `UPDATE`, `DELETE`, `SELECT`.
+Primary key: uniquely identifies a row.
+Foreign key: links related tables and maintains referential integrity.
+Constraints: `NOT NULL`, `UNIQUE`, `CHECK`, `ENUM`.
+JOIN: combines related records from multiple tables.
+Subquery: selects crops priced above the average price.
+Aggregate functions: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`.
+GROUP BY and HAVING: summarizes crop listings per farmer.
+View: `OrderDetails` presents joined order data.
+Stored procedure: `ShowAvailableCrops()` lists crops with positive stock.
+Triggers: check stock before inserting an order and deduct the ordered quantity after insertion.
+Transaction handling: trigger operations run as part of the order statement; the web/app version would also use transactions when performing multi-step operations.
+8. Sample Data and Expected Outputs
+Sample farmers: 3  
+Sample buyers: 4  
+Crop listings: 4  
+Orders: 3  
+Payments: 3
+Order	Buyer	Crop	Quantity	Order total
+1	Fresh Mart	Onion	40 kg	₹1,000
+2	Green Grocery	Tomato	20 kg	₹600
+3	City Vegetables	Wheat	50 kg	₹1,400
+Total order value: ₹3,000  
+Total payments recorded: ₹2,700  
+Order 2 outstanding balance: ₹300
+Crop	Initial quantity	Ordered quantity	Remaining quantity
+Onion	100 kg	40 kg	60 kg
+Tomato	80 kg	20 kg	60 kg
+Wheat	200 kg	50 kg	150 kg
+Potato	150 kg	0 kg	150 kg
+9. Testing
+Table creation: `SHOW TABLES;` should list five tables.
+Sample records: select from each table and verify inserted rows.
+JOIN test: combine Orders, Buyers, Crops, and Farmers to show complete order information.
+View test: `SELECT \* FROM OrderDetails;` should return the three sample orders.
+Procedure test: `CALL ShowAvailableCrops();` should list crops whose stock is greater than zero.
+Valid stock test: insert an order for 10 kg of onion when 60 kg is available; onion stock should become 50 kg.
+Invalid stock test: attempt to order more than available stock; the trigger should reject the insert.
+Payment report: verify order 2 has ₹300 remaining.
+10. Limitations and Future Enhancements
+Add a graphical or web interface.
+Add login and role-based access for farmers, buyers, and administrators.
+Add inventory handling for order cancellation and updates.
+Add invoice generation and search/filter features.
+Integrate a secure payment gateway only in a future production system.
+Add validation for phone numbers and stronger audit logging.
+11. Conclusion
+The Farmer Crop Selling Management System demonstrates a practical use of MySQL for crop sales record management. It combines relational tables, constraints, joins, aggregate queries, a view, a stored procedure, and triggers to support consistent data storage and useful reports. The project provides a beginner-friendly example of applying DBMS concepts to an agricultural use case.
